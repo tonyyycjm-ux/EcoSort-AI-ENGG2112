@@ -31,8 +31,19 @@ class EcoSort:
     def __init__(self, results=None):
         if results is None:
             active = json.loads((BASE / "active_model.json").read_text())["results"] if (BASE / "active_model.json").exists() else "trained_expanded"
-            assert active in {"trained_expanded", "trained_semantic"}, "Unknown active model."
+            assert active in {"trained_expanded", "trained_semantic", "trained_objects"}, "Unknown active model."
             results = BASE / active
+        self.object_predictor = None
+        if results.name == "trained_objects":
+            approval = json.loads((results/"deployment_approved.json").read_text())
+            assert len(approval["groups"]) == 3 and all(r["joint_correct"] >= 17 and r["total"] == 20 for r in approval["groups"])
+            for name, digest in approval["model_files_sha256"].items():
+                assert hashlib.sha256((BASE/name).read_bytes()).hexdigest() == digest, "Accepted model or routing code changed."
+            from object_model import ObjectPredictor
+            self.object_predictor = ObjectPredictor()
+            self.classes = self.object_predictor.classes
+            self.lock = threading.Lock()
+            return
         assert results.name in {"trained_expanded", "trained_semantic"}, "Archived experiments are not deployable."
         completion = json.loads((results / "training_completed.json").read_text())
         assert completion["status"] == "completed", "Complete expanded training first."
@@ -55,6 +66,10 @@ class EcoSort:
             raise gr.Error("Upload an image or capture a photo first.")
         if not isinstance(image, Image.Image):
             raise gr.Error("The input must be an image.")
+        if self.object_predictor is not None:
+            with self.lock:
+                result = self.object_predictor.identify(image)
+            return result["label"], max(result["scores"].values()), result["uncertain"], result["scores"]
         rgb = ImageOps.exif_transpose(image).convert("RGB").resize((224, 224), Image.Resampling.BILINEAR)
         pixels = np.asarray(rgb, dtype=np.float32)[None, ...]
         with self.lock:
@@ -76,6 +91,17 @@ class EcoSort:
 
     def classify(self, image, item_type="Not confirmed", food_service=False):
         item_type = item_type or "Not confirmed"
+        if getattr(self, "object_predictor", None) is not None:
+            if not isinstance(image, Image.Image):
+                raise gr.Error("Upload an image or capture a photo first.")
+            with self.lock:
+                result = self.object_predictor.identify(image, food_service)
+            route, guidance = result["route"], result["guidance"]
+            if item_type != "Not confirmed":
+                route, guidance = disposal_guidance(result["label"], item_type, food_service)
+            status = "Unable to identify reliably. Top candidate" if result["uncertain"] else "Model suggestion"
+            decision = f"{status}: {result['object']} | {DISPLAY[result['label']]} | {route}"
+            return {DISPLAY[k]:v for k,v in result["scores"].items()}, decision, guidance
         label, confidence, uncertain, scores = self.predict(image)
         route, guidance = disposal_guidance(label, item_type, food_service, uncertain)
         status = "Unable to identify reliably. Top candidate" if uncertain else "Model suggestion"
@@ -99,7 +125,7 @@ def launch(prevent_thread_lock=False, port=7861):
                     clear = gr.ClearButton([image, item_type], value="Clear")
             with gr.Column():
                 decision = gr.Textbox(label="Identification and disposal route", lines=3, interactive=False)
-                scores = gr.Label(num_top_classes=5, label="Candidate scores (not a confirmed identification)")
+                scores = gr.Label(num_top_classes=5, label="Relative candidate scores (not calibrated probabilities)")
                 guidance = gr.Markdown()
         clear.add([food_service, scores, decision, guidance])
         submit.click(engine.classify, [image, item_type, food_service], [scores, decision, guidance])

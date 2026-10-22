@@ -4,13 +4,19 @@ ENGG2112 research prototype for local waste-image identification and conditional
 
 ## Read These First
 
+- [Current real-photo update and all 60 outcomes](EcoSort_AI_Real_Photo_Update_EN.pdf)
+- [Current acceptance summary and failures](REAL_PHOTO_ACCEPTANCE_REPORT.md)
+- [Frozen 60-photo source/label manifest](acceptance_web/test_manifest.json)
+- [All current predictions and disposal routes](acceptance_web/results.csv)
 - [English technical evidence guide](EcoSort_AI_Technical_Guide_EN.pdf)
 - [English report review](FINAL_REPORT_REVIEW_EN.md)
 - [Chinese report review](FINAL_REPORT_REVIEW_ZH.md)
 - [Machine-readable experiment summary](EXPERIMENT_SUMMARY.json)
-- [Complete structured source and evidence archive](EcoSort_AI_Source_and_Evidence.zip)
+- [Current structured source and evidence archive](EcoSort_AI_Source_and_Evidence_20261023.zip)
 
-This is a development snapshot, **not a completed 95% real-world classifier**. The latest experimental candidate reached **95.13% validation and 94.85% test accuracy** on the reused public benchmark. It did **not** improve the six-photo local diagnostic (2/6 under the documented label assumptions). The website remains on the earlier CLIP/MobileNet model, with 86.43% validation and 85.88% test accuracy. Experimental results must not be attributed to the deployed website.
+**Current application, 23 October 2026:** a local frozen **Google SigLIP2 object recognizer** now drives the website. On three new prelabelled 20-photo web panels, category-and-conditional-route correctness was **19/20 (95%), 18/20 (90%), and 18/20 (90%)**, passing the required >=17/20 in every group on their first recorded evaluation. Category-only counts were 19/20, 18/20, and 20/20. Uncertain outputs count as failures; none of the failed photos were replaced. The known six-phone-photo development diagnostic improved to 5/6, not an independent validation result.
+
+This is a stratified convenience sample, **not a random population estimate or a guarantee of future accuracy**. The printed plastic bag still produces an unsafe wrong recycling suggestion. Hidden contents and service eligibility require confirmation. Generic pretrained-model web membership is unknown. Read the current addendum before quoting results: the older technical guide and report-review notes describe the **22 October historical snapshot**.
 
 ## Dataset and Results
 
@@ -20,16 +26,18 @@ Raw candidates: **167,285**. Retained after auditing: **147,303** across **17 cl
 |---|---:|---:|---:|
 | MobileNetV3Large frozen baseline | See experiment records | 73.02% | 0.6902 |
 | MobileNetV3Large partial fine-tuning | See experiment records | 78.42% | 0.7483 |
-| Deployed OpenCLIP/MobileNet ensemble | 86.43% | 85.88% | 0.8362 |
+| Former deployed OpenCLIP/MobileNet ensemble | 86.43% | 85.88% | 0.8362 |
 | Nonlinear fine-label CLIP head and neighbors | 93.83% | 93.50% | 0.9198 |
 | CLIP/DINOv2 single-head candidate | 94.85% | 94.65% | 0.9315 |
 | CLIP/DINOv2 three-head candidate | 95.13% | 94.85% | 0.9338 |
 
 All expanded rows use the same public test split; repeated evaluation is not untouched final validation. Real-photo diagnostics, uncertainty coverage and benchmark scores are separate quantities. Review flags do not remove incorrect predictions from the accuracy denominator.
 
+The current frozen SigLIP2 recognizer was **not trained on these project images**. Do not attach the archived 95.13% / 94.85% benchmark results to the current application. Its measured evidence is the sixty-photo panel, with conditional City of Sydney disposal routes.
+
 ## Run the Deployed App
 
-The complete ZIP includes the deployed project-trained MobileNet and compact CLIP classification head, with the correct directory structure. Generic pretrained encoders, raw images and feature caches are intentionally excluded. Download and extract that ZIP for the full runnable layout. Source files in the repository are also directly browseable.
+The current ZIP includes the source, notebooks, acceptance evidence and archived project-trained MobileNet/CLIP heads in their directory structure. Generic pretrained encoders, raw images and feature caches are intentionally excluded. Download and extract that ZIP for the full project layout. Source files in the repository are also directly browseable.
 
 Verified environment: **Apple Silicon Mac, Python 3.12**. Other platforms have not been tested. From the extracted project directory:
 
@@ -37,16 +45,19 @@ Verified environment: **Apple Silicon Mac, Python 3.12**. Other platforms have n
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-lock.txt
-python semantic_model.py
+python object_model.py
 python app.py
 ```
 
-The first encoder download is approximately 605 MB, pinned to a revision and SHA-256 checked. Open **http://127.0.0.1:7861/**. After the weights are downloaded, prediction runs locally without an external inference API. Do not expose this development server publicly. In the Git clone, the deployed binary weights are also available in their normal result directories; if omitted by a partial download, extract the complete ZIP.
+The current encoder download is approximately **1.50 GB**, pinned to a Google model revision and SHA-256 checked. Open **http://127.0.0.1:7861/**. After the weights are downloaded, prediction runs locally without an external inference API. Do not expose this development server publicly. Historical project-trained binary weights remain archived but are not required by the new active object-model branch.
 
 The interface supports upload and webcam snapshots, candidate scores, explicit uncertain-result messages and conditional disposal guidance based on user-confirmed item types. It cannot certify emptiness, contamination, hidden hazards or legal compliance. There is no automatic multi-object detector, physical sorter, completed batch-contamination audit or evaluated LLM summarizer.
 
 ## Reproduce Experiments
 
+- Current program: `object_model.py`, `sydney_rules.py`, `ecosort_runtime.py`; deployment requires the three passing panel records and unchanged accepted model/routing source hashes.
+- Current acceptance: `restore_acceptance.py` restores all 60 licensed source photos and verifies their recorded hashes. `test_runtime_acceptance.py` checks all website callback decisions against the frozen outcomes, including failures. Source downloads may be rate-limited or change; do not substitute images silently.
+- `collect_acceptance.py`, `freeze_acceptance.py`, `evaluate_acceptance.py`: the original collection, prelabelling and one-time evaluation protocol. Frozen evidence is protected against overwrite.
 - `prepare_dataset.py`, `download_expanded.py`, `prepare_expanded.py`: recover sources, audit and build grouped partitions. Read source licences before downloading or redistributing datasets.
 - `train_full.py`: frozen/partially fine-tuned MobileNet comparison.
 - `semantic_model.py`, `train_semantic.py`: frozen CLIP features, regularized head and validation-selected ensemble.

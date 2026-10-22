@@ -144,6 +144,7 @@ scikit-learn==1.9.1
 scipy==1.17.1
 semantic-version==2.10.0
 Send2Trash==2.1.0
+sentencepiece==0.2.2
 setuptools==84.2.1
 shellingham==1.5.4
 six==1.17.0
@@ -160,12 +161,14 @@ terminado==0.18.1
 threadpoolctl==3.7.0
 timm==1.0.30
 tinycss2==1.5.1
+tokenizers==0.23.3
 tomlkit==0.14.0
 torch==2.14.1
 torchvision==0.29.1
 tornado==6.6
 tqdm==4.70.1
 traitlets==5.16.1
+transformers==5.20.2
 typer==0.27.3
 typing-inspection==0.4.4
 typing_extensions==4.16.0

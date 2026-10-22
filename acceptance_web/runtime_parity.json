@@ -1,0 +1,302 @@
+[
+  {
+    "id": "0:0",
+    "decision": "Model suggestion: plastic drink bottle | Plastic | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "0:1",
+    "decision": "Unable to identify reliably. Top candidate: glass bottle | Glass | Manual review - disposal not confirmed",
+    "parity": true
+  },
+  {
+    "id": "0:2",
+    "decision": "Unable to identify reliably. Top candidate: plastic drink bottle | Plastic | Manual review - disposal not confirmed",
+    "parity": true
+  },
+  {
+    "id": "1:0",
+    "decision": "Model suggestion: black plastic food container | Plastic | General waste - red lid bin",
+    "parity": true
+  },
+  {
+    "id": "1:1",
+    "decision": "Model suggestion: plastic food container | Plastic | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "1:2",
+    "decision": "Model suggestion: plastic food container | Plastic | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "2:0",
+    "decision": "Model suggestion: glass bottle | Glass | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "2:2",
+    "decision": "Model suggestion: glass bottle | Glass | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "2:4",
+    "decision": "Model suggestion: glass bottle | Glass | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "3:0",
+    "decision": "Model suggestion: glass jar | Glass | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "3:2",
+    "decision": "Model suggestion: glass jar | Glass | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "3:3",
+    "decision": "Model suggestion: glass jar | Glass | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "21:0",
+    "decision": "Unable to identify reliably. Top candidate: plastic packaging | Plastic | Manual review - disposal not confirmed",
+    "parity": true
+  },
+  {
+    "id": "21:1",
+    "decision": "Model suggestion: aluminium beverage can | Metal | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "21:2",
+    "decision": "Unable to identify reliably. Top candidate: empty tin can | Metal | Manual review - disposal not confirmed",
+    "parity": true
+  },
+  {
+    "id": "5:5",
+    "decision": "Model suggestion: steel food tin | Metal | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "29:0",
+    "decision": "Model suggestion: metal food can | Metal | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "29:1",
+    "decision": "Model suggestion: metal food can | Metal | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "6:0",
+    "decision": "Model suggestion: corrugated cardboard box | Cardboard | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "6:2",
+    "decision": "Model suggestion: corrugated cardboard box | Cardboard | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "6:4",
+    "decision": "Model suggestion: cardboard packaging | Cardboard | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "7:1",
+    "decision": "Model suggestion: newspaper | Paper | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "7:3",
+    "decision": "Model suggestion: newspaper | Paper | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "7:4",
+    "decision": "Model suggestion: magazine | Paper | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "8:3",
+    "decision": "Model suggestion: household battery | Battery | Problem waste - battery drop-off",
+    "parity": true
+  },
+  {
+    "id": "8:4",
+    "decision": "Model suggestion: rechargeable battery | Battery | Problem waste - battery drop-off",
+    "parity": true
+  },
+  {
+    "id": "20:1",
+    "decision": "Model suggestion: household battery | Battery | Problem waste - battery drop-off",
+    "parity": true
+  },
+  {
+    "id": "9:3",
+    "decision": "Model suggestion: computer keyboard | Electronic waste | Special recycling - e-waste collection",
+    "parity": true
+  },
+  {
+    "id": "9:4",
+    "decision": "Model suggestion: computer keyboard | Electronic waste | Special recycling - e-waste collection",
+    "parity": true
+  },
+  {
+    "id": "9:5",
+    "decision": "Model suggestion: computer keyboard | Electronic waste | Special recycling - e-waste collection",
+    "parity": true
+  },
+  {
+    "id": "10:2",
+    "decision": "Model suggestion: cotton clothing | Textiles | Reuse or special textile recycling",
+    "parity": true
+  },
+  {
+    "id": "10:4",
+    "decision": "Model suggestion: cotton clothing | Textiles | Reuse or special textile recycling",
+    "parity": true
+  },
+  {
+    "id": "10:5",
+    "decision": "Model suggestion: cotton clothing | Textiles | Reuse or special textile recycling",
+    "parity": true
+  },
+  {
+    "id": "11:0",
+    "decision": "Model suggestion: ceramic mug | Ceramics | Non-recyclable in yellow lid - confirm disposal",
+    "parity": true
+  },
+  {
+    "id": "11:1",
+    "decision": "Model suggestion: ceramic mug | Ceramics | Non-recyclable in yellow lid - confirm disposal",
+    "parity": true
+  },
+  {
+    "id": "11:2",
+    "decision": "Model suggestion: ceramic mug | Ceramics | Non-recyclable in yellow lid - confirm disposal",
+    "parity": true
+  },
+  {
+    "id": "12:3",
+    "decision": "Model suggestion: banana peel | Food organics | Food organics - confirm service; otherwise red lid",
+    "parity": true
+  },
+  {
+    "id": "31:1",
+    "decision": "Model suggestion: food scraps | Food organics | Food organics - confirm service; otherwise red lid",
+    "parity": true
+  },
+  {
+    "id": "35:0",
+    "decision": "Model suggestion: banana peel | Food organics | Food organics - confirm service; otherwise red lid",
+    "parity": true
+  },
+  {
+    "id": "27:0",
+    "decision": "Model suggestion: pile of fallen leaves | Vegetation | Garden organics - green lid bin",
+    "parity": true
+  },
+  {
+    "id": "32:1",
+    "decision": "Model suggestion: pile of fallen leaves | Vegetation | Garden organics - green lid bin",
+    "parity": true
+  },
+  {
+    "id": "36:0",
+    "decision": "Model suggestion: pile of fallen leaves | Vegetation | Garden organics - green lid bin",
+    "parity": true
+  },
+  {
+    "id": "14:2",
+    "decision": "Model suggestion: wooden utensil | Wood | Wood item - check council disposal",
+    "parity": true
+  },
+  {
+    "id": "14:3",
+    "decision": "Model suggestion: wooden utensil | Wood | Wood item - check council disposal",
+    "parity": true
+  },
+  {
+    "id": "14:5",
+    "decision": "Model suggestion: wooden utensil | Wood | Wood item - check council disposal",
+    "parity": true
+  },
+  {
+    "id": "15:0",
+    "decision": "Model suggestion: plastic bag | Plastic | General waste - red lid bin",
+    "parity": true
+  },
+  {
+    "id": "15:1",
+    "decision": "Model suggestion: sheet of printed paper | Paper | Recyclable - yellow lid bin",
+    "parity": true
+  },
+  {
+    "id": "15:2",
+    "decision": "Model suggestion: plastic bag | Plastic | General waste - red lid bin",
+    "parity": true
+  },
+  {
+    "id": "16:0",
+    "decision": "Model suggestion: roll of paper kitchen towel | Other waste | General waste - red lid bin",
+    "parity": true
+  },
+  {
+    "id": "16:1",
+    "decision": "Model suggestion: roll of paper kitchen towel | Other waste | General waste - red lid bin",
+    "parity": true
+  },
+  {
+    "id": "16:4",
+    "decision": "Model suggestion: roll of paper kitchen towel | Other waste | General waste - red lid bin",
+    "parity": true
+  },
+  {
+    "id": "17:1",
+    "decision": "Model suggestion: light bulb | Light bulbs | Problem waste - identify item and collection point",
+    "parity": true
+  },
+  {
+    "id": "17:2",
+    "decision": "Model suggestion: fluorescent light tube | Light bulbs | Problem waste - identify item and collection point",
+    "parity": true
+  },
+  {
+    "id": "17:3",
+    "decision": "Model suggestion: light bulb | Light bulbs | Problem waste - identify item and collection point",
+    "parity": true
+  },
+  {
+    "id": "18:0",
+    "decision": "Model suggestion: pharmaceutical blister pack | Medicines | Special disposal - community pharmacy",
+    "parity": true
+  },
+  {
+    "id": "18:3",
+    "decision": "Model suggestion: pharmaceutical blister pack | Medicines | Special disposal - community pharmacy",
+    "parity": true
+  },
+  {
+    "id": "18:4",
+    "decision": "Model suggestion: pharmaceutical blister pack | Medicines | Special disposal - community pharmacy",
+    "parity": true
+  },
+  {
+    "id": "25:0",
+    "decision": "Model suggestion: paint can | Household problem waste | Problem waste - identify item and collection point",
+    "parity": true
+  },
+  {
+    "id": "25:1",
+    "decision": "Model suggestion: paint can | Household problem waste | Problem waste - identify item and collection point",
+    "parity": true
+  },
+  {
+    "id": "25:3",
+    "decision": "Model suggestion: paint can | Household problem waste | Problem waste - identify item and collection point",
+    "parity": true
+  }
+]

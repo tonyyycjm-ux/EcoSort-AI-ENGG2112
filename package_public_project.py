@@ -10,8 +10,8 @@ import shutil
 import zipfile
 
 BASE = Path(__file__).resolve().parent
-OUT = BASE / "public_export"
-ARCHIVE = BASE / "EcoSort_AI_Source_and_Evidence.zip"
+OUT = BASE / "public_export_20261023"
+ARCHIVE = BASE / "EcoSort_AI_Source_and_Evidence_20261023.zip"
 TEXT_SUFFIXES = {".py",".md",".json",".csv",".txt",".ipynb",".command"}
 PRIVATE_PATTERNS = [r"/Users/[A-Za-z0-9._-]+",r"/var/folders/[a-z0-9]{2}/[^\s\"']+",
                     r"https://colab\.research\.google\.com/drive/[A-Za-z0-9_-]+[^\s\"']*",
@@ -50,7 +50,11 @@ def main():
     assert not (OUT/"EXPORT_INVENTORY.json").exists(), "Preserve the already verified export."
     sources = list(BASE.glob("*.py"))+list(BASE.glob("*.ipynb"))
     sources += [BASE/name for name in ("requirements-lock.txt","Start EcoSort.command","active_model.json",
-                "FINAL_REPORT_REVIEW_ZH.md","FINAL_REPORT_REVIEW_EN.md","EcoSort_AI_Technical_Guide_EN.pdf")]
+                "FINAL_REPORT_REVIEW_ZH.md","FINAL_REPORT_REVIEW_EN.md","EcoSort_AI_Technical_Guide_EN.pdf",
+                "EcoSort_AI_Real_Photo_Update_EN.pdf","REAL_PHOTO_ACCEPTANCE_REPORT.md")]
+    sources += [BASE/"acceptance_web"/name for name in ("test_manifest.json", "results.json", "results.csv", "runtime_parity.json", "selection_review.json")]
+    sources += [BASE/"trained_objects/deployment_approved.json"]
+    sources += [BASE/"trained_objects/local_development.json"]
     sources += [BASE/"data/expanded"/name for name in ("dataset_verification.json","class_counts.csv","class_names.json","category_mapping.json")]
     sources += [BASE/"saved_results"/name for name in ("split_manifest.csv","weighted_vs_unweighted.csv","per_class_recall_comparison.csv")]
     for directory in ("trained_expanded","trained_semantic","trained_nonlinear","trained_multiview","trained_multiseed"):
@@ -78,10 +82,11 @@ def main():
             writer.writerow({key:row[key] for key in fields})
     summary = dict(raw_images=167285,retained_images=147303,
                    split_counts=dict(train=117893,validation=14698,test=14712),
-                   deployed=load("trained_semantic/training_completed.json"),
+                   deployed=load("trained_objects/deployment_approved.json"),
+                   former_deployed=load("trained_semantic/training_completed.json"),
                    candidates={name:dict(completion=load(name+"/training_completed.json"),diagnostics=load(name+"/external_diagnostics.json"))
                                for name in ("trained_nonlinear","trained_multiview","trained_multiseed")},
-                   warning="95% validation/test joint target not met; local six-photo diagnostic remains 2/6; candidates not deployed")
+                   warning="Current application is frozen SigLIP2, not the benchmark candidate. New web joint scores: 19/20, 18/20, 18/20. Local six-photo development: 5/6. No universal accuracy guarantee; old benchmark 95% validation/test target remains unmet.")
     (OUT/"EXPERIMENT_SUMMARY.json").write_text(json.dumps(summary,indent=2))
     (OUT/".gitignore").write_text(".venv/\n__pycache__/\n*.pyc\n.DS_Store\nmodels/\nfeatures_clip_dino/\ndata/garbage265/\ndata/garbage265_download/\n*.log\n*.pid\n")
     inventory = []

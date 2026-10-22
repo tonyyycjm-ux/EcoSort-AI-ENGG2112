@@ -1,5 +1,5 @@
 """Source-linked household guidance, separate from visual model predictions."""
-VERIFIED = "2026-10-22"
+VERIFIED = "2026-10-23"
 RECYCLE = "https://www.cityofsydney.nsw.gov.au/waste-recycling-services/recycle-household-items"
 GENERAL = "https://www.cityofsydney.nsw.gov.au/explainers/2026/moving-in-or-out-waste-and-recycling-guide"
 DOORSTEP = "https://www.cityofsydney.nsw.gov.au/environmental-support-funding/doorstep-recycling"
@@ -9,6 +9,29 @@ EPA = "https://www.epa.nsw.gov.au/Your-environment/Recycling-and-reuse/household
 EPA_OVERVIEW = "https://www.epa.nsw.gov.au/Your-environment/Recycling-and-reuse/household-recycling-overview"
 
 ITEM_TYPES = ["Not confirmed", "Empty plastic water/drink bottle", "Empty non-black rigid plastic food container", "Empty glass bottle or jar", "Empty aluminium or steel can", "Paper or cardboard with food scraps removed", "Ceramic crockery", "Soft plastic bag or wrapper", "Polystyrene packaging", "Black plastic container", "Food scraps", "Garden leaves or small prunings", "Battery", "Small electronics", "Textiles", "Unwanted medicines", "Other / unsure"]
+
+def predicted_item_guidance(label, object_name, food_service=False, uncertain=False):
+    """Route inferred objects conditionally, without claiming user confirmation."""
+    if uncertain:
+        return disposal_guidance(label, food_service=food_service, uncertain=True)
+    specific = {
+        "plastic drink bottle": ITEM_TYPES[1], "plastic food container": ITEM_TYPES[2],
+        "glass bottle": ITEM_TYPES[3], "glass jar": ITEM_TYPES[3],
+        "aluminium beverage can": ITEM_TYPES[4], "steel food tin": ITEM_TYPES[4],
+        "metal food can": ITEM_TYPES[4], "empty tin can": ITEM_TYPES[4],
+        "plastic bag": "Soft plastic bag or wrapper",
+        "black plastic food container": "Black plastic container",
+    }
+    item = specific.get(object_name, "Not confirmed")
+    if label in {"paper", "cardboard"}:
+        item = ITEM_TYPES[5]
+    if label == "trash" and object_name in {"used tissue", "disposable nappy", "cigarette butt", "disposable face mask", "paper kitchen towel", "roll of paper kitchen towel", "paper napkin"}:
+        return "General waste - red lid bin", f"### General waste - red lid bin\n\nConditional on the suggested item being correct. Not yellow lid recycling.\n\n[Official source]({RECYCLE}) | Checked {VERIFIED}"
+    route, text = disposal_guidance(label, item, food_service)
+    text = text.replace("User-confirmed item guidance", "Conditional guidance for the inferred object")
+    if item in ITEM_TYPES[1:6]:
+        text += "\n\nConfirm that this is the named item, not black plastic, coated mixed packaging, or contaminated packaging, before using this route."
+    return route, text
 
 def disposal_guidance(label, item_type="Not confirmed", food_service=False, uncertain=False):
     if item_type not in ITEM_TYPES:

@@ -1,7 +1,7 @@
 {
-  "results": "trained_semantic",
-  "published": "2026-10-22",
-  "public_test_accuracy": 0.8588227297444263,
-  "final_panel_accuracy": 0.9333333333333333,
-  "limits": "Complex TACO diagnostic accuracy is 65.45%; this is not a universal 80% guarantee."
+  "results": "trained_objects",
+  "published": "2026-10-23",
+  "acceptance_joint_scores": [0.95, 0.90, 0.90],
+  "acceptance_category_scores": [0.95, 0.90, 1.0],
+  "limits": "Three prelabelled convenience panels, 20 photos each. Conditional City of Sydney routes; not a guarantee for future photos. Benchmark classifier scores do not describe this zero-shot object model."
 }
