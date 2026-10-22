@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+models/
+features_clip_dino/
+data/garbage265/
+data/garbage265_download/
+*.log
+*.pid

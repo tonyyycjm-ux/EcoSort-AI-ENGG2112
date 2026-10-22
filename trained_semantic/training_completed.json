@@ -1,0 +1,16 @@
+{
+  "status": "completed",
+  "test_metrics": {
+    "accuracy": 0.8588227297444263,
+    "macro_f1": 0.8362276223326948
+  },
+  "test_accuracy_target_met": true,
+  "verified_image_count": 147303,
+  "split_counts": {
+    "train": 117893,
+    "validation": 14698,
+    "test": 14712
+  },
+  "seconds": 396.8841103329323,
+  "note": "Public test was evaluated after validation selection. It was evaluated previously by the old model, so this is a benchmark comparison, not a newly collected real-world test."
+}

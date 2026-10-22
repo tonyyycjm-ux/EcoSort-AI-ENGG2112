@@ -1,0 +1,56 @@
+{
+  "status": "completed",
+  "validation_metrics": {
+    "accuracy": 0.9512858892366308,
+    "macro_f1": 0.9391017746484134
+  },
+  "test_metrics": {
+    "accuracy": 0.9484774333877107,
+    "macro_f1": 0.9337591302693231
+  },
+  "target_met": false,
+  "seconds": 76.56162629183382,
+  "classes": [
+    "battery",
+    "cardboard",
+    "ceramics",
+    "ewaste",
+    "food_organics",
+    "glass",
+    "household_problem_waste",
+    "light_bulbs",
+    "medicines",
+    "metal",
+    "mixed_items",
+    "paper",
+    "plastic",
+    "textile_trash",
+    "trash",
+    "vegetation",
+    "wood"
+  ],
+  "manifest_sha256": "4a22fd94a58f2ffe1e8b606c093c8dd137352a433b44549b349ec2788f8ca906",
+  "preprocess_version": "full-object-letterbox-v2",
+  "feature_source": "features_clip_dino",
+  "inputs": 1280,
+  "selected": {
+    "name": "ensemble:average_fine+knn:(15, 0.03)",
+    "first": "average_fine",
+    "second": "knn:(15, 0.03)",
+    "weight": 0.75,
+    "accuracy": 0.9512858892366308,
+    "macro_f1": 0.9391017746484134
+  },
+  "temperature": 0.6957075040459471,
+  "fine_members": [
+    "fine_label",
+    "fine_label_seed1",
+    "fine_label_seed2"
+  ],
+  "selection": "Validation only; test and local photos never fit or select",
+  "split_counts": {
+    "train": 117893,
+    "validation": 14698,
+    "test": 14712
+  }
+}

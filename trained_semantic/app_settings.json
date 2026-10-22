@@ -1,0 +1,71 @@
+{
+  "classes": [
+    "battery",
+    "cardboard",
+    "ceramics",
+    "ewaste",
+    "food_organics",
+    "glass",
+    "household_problem_waste",
+    "light_bulbs",
+    "medicines",
+    "metal",
+    "mixed_items",
+    "paper",
+    "plastic",
+    "textile_trash",
+    "trash",
+    "vegetation",
+    "wood"
+  ],
+  "linear_temperature": 0.9657101604838128,
+  "zero_temperature": 1.889442283271766,
+  "zero_logit_scale": 100.0,
+  "weights": [
+    0.5,
+    0.5,
+    0
+  ],
+  "accuracy": 0.8643352837120697,
+  "macro_f1": 0.8418308815559135,
+  "review_threshold": 0.6,
+  "minimum_top_two_margin": 0.2,
+  "manual_review_classes": [
+    "mixed_items",
+    "household_problem_waste",
+    "medicines",
+    "light_bulbs"
+  ],
+  "backbone": "MobileNetV3Large + frozen OpenCLIP ViT-B-32",
+  "image_count": 147303,
+  "training_images": 117893,
+  "temperature": 1.0,
+  "mobile_temperature": 1.0158101889263487,
+  "manifest_sha256": "4a22fd94a58f2ffe1e8b606c093c8dd137352a433b44549b349ec2788f8ca906",
+  "weights_revision": "1a25a446712ba5ee05982a381eed697ef9b435cf",
+  "weights_sha256": "ac4f8c4b88af6d963118cbf40ad93176d092abbedfcb752601ae1866352656e6",
+  "selection": "Validation only; old external photos not used",
+  "linear_trials": [
+    {
+      "C": 1.0,
+      "converged": true,
+      "accuracy": 0.8469859844876854,
+      "macro_f1": 0.8213980549992612
+    },
+    {
+      "C": 10.0,
+      "converged": true,
+      "accuracy": 0.8534494489046128,
+      "macro_f1": 0.8343029820592642
+    },
+    {
+      "C": 100.0,
+      "converged": false,
+      "accuracy": 0.8525649748265071,
+      "macro_f1": 0.8324369881270909
+    }
+  ],
+  "preprocess_version": "full-object-letterbox-v2",
+  "linear_C": 10.0,
+  "mobile_model_sha256": "7e328d84144e109d9222a7092a26da16e6db54bc467392afaac61367f6db8725"
+}

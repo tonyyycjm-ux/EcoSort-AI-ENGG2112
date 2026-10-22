@@ -1,0 +1,26 @@
+{
+  "local_six": {
+    "correct": 2,
+    "total": 6,
+    "accuracy": 0.3333333333333333,
+    "role": "Previously observed development/regression panel; not new independent validation"
+  },
+  "web_thirty": {
+    "correct": 23,
+    "total": 30,
+    "accuracy": 0.7666666666666667,
+    "role": "Previously observed development/regression panel; not new independent validation"
+  },
+  "taco_diagnostic": {
+    "correct": 37,
+    "total": 55,
+    "accuracy": 0.6727272727272727,
+    "role": "Previously observed development/regression panel; not new independent validation"
+  },
+  "old_ten": {
+    "correct": 9,
+    "total": 10,
+    "accuracy": 0.9,
+    "role": "Previously observed development/regression panel; not new independent validation"
+  }
+}

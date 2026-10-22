@@ -1,0 +1,7 @@
+{
+  "results": "trained_semantic",
+  "published": "2026-10-22",
+  "public_test_accuracy": 0.8588227297444263,
+  "final_panel_accuracy": 0.9333333333333333,
+  "limits": "Complex TACO diagnostic accuracy is 65.45%; this is not a universal 80% guarantee."
+}
