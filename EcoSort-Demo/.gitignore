@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+models/
+evidence/photos/
+*.log
+*.pid
+.DS_Store

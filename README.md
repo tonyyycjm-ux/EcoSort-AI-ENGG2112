@@ -1,5 +1,12 @@
 # EcoSort AI
 
+## Simplified Q&A Demo
+
+Use **[EcoSort-Demo](EcoSort-Demo/README.md)** for the independent four-Python-file demonstration. Its [English text/code notebook](EcoSort-Demo/EcoSort_Demo.ipynb) explains the whole flow; [download the compact demo source ZIP](EcoSort_Demo_Source.zip) for setup. It retains upload/webcam input, the same frozen recognizer, review flags, item confirmation and City of Sydney guidance. It uses port 7862, leaving the original app on 7861 unchanged.
+
+The simplification was checked against all 60 original photos: category, object, review and disposal decisions match, including the known failures. This is a behavior-preservation regression, **not a new independent accuracy result**. The full development history, training experiments and older source archive below remain available. The demo does not train SigLIP2 on the historical project dataset.
+
+
 ENGG2112 research prototype for local waste-image identification and conditional City of Sydney disposal assistance. This repository contains the complete project source and notebooks, compact experiment evidence, an English technical guide, and Chinese/English report-review notes.
 
 ## Read These First
