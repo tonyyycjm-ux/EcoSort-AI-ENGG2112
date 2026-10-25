@@ -1,0 +1,11 @@
+{
+  "verified_images": 147303,
+  "all_sha256_match": true,
+  "relative_paths": true,
+  "split_counts": {
+    "test": 14712,
+    "train": 117893,
+    "validation": 14698
+  },
+  "seconds": 36.38787458394654
+}

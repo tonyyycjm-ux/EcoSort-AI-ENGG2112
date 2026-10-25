@@ -31,7 +31,9 @@ python app.py
 
 The trained checkpoint and training records are in trained_expanded/. The packaged verification record permits inference without downloading the training dataset. After restoring the dataset, run python evaluate.py to re-evaluate every validation/test image.
 
-Raw images and the private-path split manifest are not published. On the original Mac, the split manifest and source images remain in the local project. Training and evaluation require data/expanded/split_manifest.csv with the columns path, label, sha256, group_id and split, together with the matching licensed image files. A fresh clone supports inference using the included checkpoint; it cannot reproduce training or full evaluation until that dataset and its fixed grouped split are restored. Do not repartition the images and describe the resulting metrics as the same evaluation.
+The local project is self-contained: all source datasets are under data/sources/, and data/expanded/split_manifest.csv uses project-relative image paths. train.py resolves paths relative to its own directory, so training and evaluation do not depend on an older project or the terminal's working directory. The original images, labels, hashes, groups and split membership are preserved.
+
+Raw images and the split manifest are not published. Training and evaluation require data/expanded/split_manifest.csv with the columns path, label, sha256, group_id and split, together with the matching licensed image files. A fresh clone supports inference using the included checkpoint; it cannot reproduce training or full evaluation until that dataset and its fixed grouped split are restored. Do not repartition the images and describe the resulting metrics as the same evaluation.
 
 The local interface uses http://127.0.0.1:7862/. Start EcoSort.command launches it after setup. Do not expose the development server publicly.
 

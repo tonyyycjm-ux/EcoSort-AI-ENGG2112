@@ -21,6 +21,13 @@ LABELS = json.loads((BASE / "data/expanded/class_names.json").read_text())
 SIZE = (224, 224)
 BATCH = 64
 
+def load_manifest():
+    frame = pd.read_csv(BASE / "data/expanded/split_manifest.csv")
+    paths = [(BASE / path).resolve() for path in frame.path]
+    assert all(path.is_relative_to(BASE / "data") for path in paths), "Dataset paths must stay inside this project."
+    frame["path"] = [str(path) for path in paths]
+    return frame
+
 def load_image(path):
     if hasattr(path, "item"):
         path = path.item()
@@ -65,7 +72,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=False)
     started = time.perf_counter()
     tf.keras.utils.set_random_seed(42)
-    manifest = pd.read_csv(BASE / "data/expanded/split_manifest.csv")
+    manifest = load_manifest()
     verification = json.loads((BASE / "data/expanded/dataset_verification.json").read_text())
     assert len(manifest) == verification["retained_images"] and len(manifest) > 100000
     assert manifest.sha256.is_unique and manifest.groupby("group_id").split.nunique().max() == 1

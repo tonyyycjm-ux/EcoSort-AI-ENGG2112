@@ -3,7 +3,7 @@
   "initialization": "ImageNet; subsequently trained on project images",
   "training_images": 117893,
   "retained_images": 147303,
-  "verified_at": "2026-10-25T14:48:09.163218+11:00",
+  "verified_at": "2026-10-25T15:07:20.608325+11:00",
   "metrics": {
     "validation": {
       "images": 14698,
@@ -17,13 +17,13 @@
     }
   },
   "rules_and_inputs_passed": true,
-  "manifest_sha256": "4a22fd94a58f2ffe1e8b606c093c8dd137352a433b44549b349ec2788f8ca906",
+  "manifest_sha256": "650b97a3ede6ccac9b38164b5bf8a899c7b9fac036c942910b315e204138d3d4",
   "code_sha256": {
     "app.py": "952e9d3682ec0d5b4a4970691cbd3ed91fabb178951d40cc3583b50259bd6396",
     "classifier.py": "c715481f9bd36a6f493a75151538412c846d24f44892b5d3398ffd53764bccca",
     "disposal_rules.py": "c7d7561f5dbbc19def94f0438b64b63d1b29f3685ab243246e41415074f75586",
-    "evaluate.py": "5333c7769d8295bfe47627b03bcc9f302a31a0bb9e8fb064ccfd12814ec9dca4",
-    "train.py": "ccc2de5d21fc697a40dbf9c894f179fe1bc81ad1f36a3f805f21c3795eb0719b"
+    "evaluate.py": "2a9344b475c2aba51ed253c1854594f3ae9eef72e91151b9cf73c0f1f1a891d4",
+    "train.py": "5e9a5b093e58b1d7e8d33584aead21fee152457556c87a622ad45e3cbc906f1d"
   },
   "artifact_sha256": {
     "ecosort_model.keras": "7e328d84144e109d9222a7092a26da16e6db54bc467392afaac61367f6db8725",

@@ -11,13 +11,13 @@ import pandas as pd
 from PIL import Image
 from sklearn.metrics import accuracy_score, f1_score
 from app import BASE, EcoSort
-from train import dataset, LABELS
+from train import dataset, load_manifest, LABELS
 from disposal_rules import disposal_guidance
 
 
 def main():
     manifest_path = BASE / "data/expanded/split_manifest.csv"
-    manifest = pd.read_csv(manifest_path)
+    manifest = load_manifest()
     audit = json.loads((BASE / "data/expanded/dataset_verification.json").read_text())
     assert len(manifest) == audit["retained_images"] == 147303
     assert manifest.sha256.is_unique and manifest.groupby("group_id").split.nunique().max() == 1
