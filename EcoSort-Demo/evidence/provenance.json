@@ -1,5 +1,0 @@
-{
-  "original_private_manifest_sha256": "8aa68f6b1465790c899913b71aa65bb5b16b5784b2a2fa5b392153d64dbce8ca",
-  "portable_manifest_sha256": "9da18e087320674b1e6b3cd740bb1fcd0bd01ecd1b7cbbf3a9c17a68be528d0c",
-  "change": "Only absolute photo paths replaced with portable file basenames. Original reference predictions retained unchanged."
-}

@@ -1,12 +1,6 @@
-# EcoSort AI
-
-**Current submission: project-trained MobileNetV3Large, restored 25 October 2026.** This supersedes the former SigLIP2 demo. ImageNet initialization is followed by actual project-data training; the current application does not call SigLIP2.
-
-[Open the five-file submission edition](EcoSort-Demo/README.md) | [English explanation notebook](EcoSort-Demo/EcoSort_Demo.ipynb) | [Download repository source](https://github.com/tonyyycjm-ux/EcoSort-AI-ENGG2112/archive/refs/heads/main.zip)
-
 # EcoSort AI: Project-Trained Submission Edition
 
-The active classifier is **MobileNetV3Large, initialized with ImageNet and then trained on the project's audited waste images**. There is no SigLIP2, text-prompt matcher, CLIP or zero-shot fallback in the active application.
+The classifier is **MobileNetV3Large, initialized with ImageNet and then trained on the project's audited waste images**. It predicts 17 waste-material categories and provides conditional City of Sydney disposal guidance.
 
 ## Five Python Files
 
@@ -24,7 +18,7 @@ The active classifier is **MobileNetV3Large, initialized with ImageNet and then 
 
 The deployed checkpoint comes from the completed 22 October training run: an ImageNet-initialized frozen MobileNetV3 baseline, followed by six epochs of partial fine-tuning. Each fine-tuning epoch visits the complete training partition, without a sample/step cap. Class weighting, training-only augmentation and validation macro-F1 checkpoint selection are implemented in train.py. Batch normalization remains frozen during fine-tuning.
 
-Historical validation accuracy: 79.39%. Historical test accuracy: 78.42%, macro-F1 0.7483. Read evidence/trained_model_verified.json for the latest actual re-evaluation. No 95% claim is made. These previously observed public-data splits are not fresh independent evaluation.
+Validation accuracy: 79.39%. Test accuracy: 78.42%, macro-F1 0.7483, rechecked on 25 October 2026. Read evidence/trained_model_verified.json for the measured re-evaluation. No 95% claim is made. These previously observed public-data splits are not fresh independent evaluation or a real-photo accuracy guarantee.
 
 ## Run on Apple Silicon / Python 3.12
 
@@ -37,7 +31,7 @@ python app.py
 
 The trained checkpoint and training records are in trained_expanded/. The packaged verification record permits inference without downloading the training dataset. After restoring the dataset, run python evaluate.py to re-evaluate every validation/test image.
 
-The local split manifest currently references the original data files in EcoSort-Local; do not delete that dataset. Raw images and the private-path manifest are not published with this edition. To reproduce on another machine, restore the licensed source images and rebuild the same grouped split with the original preparation scripts in the repository, then update image paths without changing labels, hashes, groups or split membership. The public source archive alone is not sufficient to retrain without those data-recovery steps.
+Raw images and the private-path split manifest are not published. On the original Mac, the split manifest and source images remain in the local project. Training and evaluation require data/expanded/split_manifest.csv with the columns path, label, sha256, group_id and split, together with the matching licensed image files. A fresh clone supports inference using the included checkpoint; it cannot reproduce training or full evaluation until that dataset and its fixed grouped split are restored. Do not repartition the images and describe the resulting metrics as the same evaluation.
 
 The local interface uses http://127.0.0.1:7862/. Start EcoSort.command launches it after setup. Do not expose the development server publicly.
 
@@ -55,11 +49,6 @@ EcoSort_Demo.ipynb alternates English explanations and code for dataset inspecti
 
 The network predicts material categories, not bottle/bag/container subtypes. Generic plastic, glass and metal therefore require item confirmation before a specific household recycling route is given. Explicitly confirmed item types can select a route; the image cannot confirm hidden hazards, contamination or service availability.
 
-Upload and webcam inputs, 17-class scores, uncertainty flags, user confirmation and conditional local guidance are retained. Current model scores, review coverage and real-photo performance are separate quantities. Earlier SigLIP2 panel results do not apply to this model. No new independent real-photo pass is claimed.
+The interface supports upload and webcam inputs, 17-class scores, uncertainty flags, user confirmation and conditional local guidance. Dataset accuracy, review coverage and real-photo performance are separate quantities. No independent real-photo pass is claimed.
 
-The previous SigLIP2 sources were archived locally before this change, and GitHub history retains that version. Historical project training remains available in EcoSort-Local. Disclose actual Codex/ChatGPT coding and analysis assistance as required by the course.
-
-
-## Historical Research Archive
-
-The root training and preparation scripts, earlier checkpoints, reports and PDFs remain for provenance. The older PDF guides and source ZIPs describe their dated historical snapshots, not the restored current submission. Earlier SigLIP2 60-photo results and CLIP/DINO benchmark scores must not be attributed to this MobileNet model. The current validation/test record is [here](EcoSort-Demo/evidence/trained_model_verified.json). Root app.py now also selects trained_expanded via active_model.json.
+Disclose actual Codex/ChatGPT coding and analysis assistance as required by the course. Public visibility does not grant a new licence for upstream models, datasets or dependencies; retain their applicable notices.
