@@ -1,7 +1,10 @@
 {
-  "results": "trained_objects",
-  "published": "2026-10-23",
-  "acceptance_joint_scores": [0.95, 0.90, 0.90],
-  "acceptance_category_scores": [0.95, 0.90, 1.0],
-  "limits": "Three prelabelled convenience panels, 20 photos each. Conditional City of Sydney routes; not a guarantee for future photos. Benchmark classifier scores do not describe this zero-shot object model."
+  "results": "trained_expanded",
+  "updated": "2026-10-25",
+  "model": "MobileNetV3Large, ImageNet initialization followed by project-data training",
+  "retained_images": 147303,
+  "training_images": 117893,
+  "validation_accuracy": 0.7939175398013335,
+  "test_accuracy": 0.7841897770527461,
+  "limits": "Restored completed project training from 22 October; full validation/test inference rechecked 25 October. No SigLIP2 fallback. Prior zero-shot panel results do not apply. Material predictions require item confirmation for specific recycling routes."
 }

@@ -1,89 +1,51 @@
-"""Frozen local image-text matching, with no training-framework dependencies."""
-import hashlib
+"""Project-trained MobileNetV3; no image-text or zero-shot fallback."""
+import os
+os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
+import json
 from pathlib import Path
 
 import numpy as np
-import torch
-from PIL import ImageOps
-from transformers import AutoModel, AutoProcessor
-from disposal_rules import predicted_item_guidance
+from PIL import Image, ImageOps
+import tensorflow as tf
+from disposal_rules import disposal_guidance
 
 BASE = Path(__file__).resolve().parent
-REVISION = "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2"
-SHA256 = "612923381c76ec5a9bed335d1c48827e3f2e506ac31b044b63b2031fadee6a0b"
-ITEMS = {
-    "battery": ["household battery", "rechargeable battery", "button cell battery"],
-    "cardboard": ["corrugated cardboard box", "cardboard packaging", "piece of cardboard"],
-    "ceramics": ["ceramic mug", "porcelain plate", "broken ceramic crockery", "ceramic vase"],
-    "ewaste": ["electronic device", "computer keyboard", "mobile phone", "electrical appliance", "circuit board", "electrical cable"],
-    "food_organics": ["food scraps", "fruit peel", "vegetable leftovers", "discarded meat or fish"],
-    "glass": ["glass bottle", "glass jar", "broken glass", "glass container"],
-    "household_problem_waste": ["household chemical container", "paint can", "gas cylinder", "fire extinguisher"],
-    "light_bulbs": ["light bulb", "fluorescent light tube", "LED light bulb"],
-    "medicines": ["medicine tablets", "pharmaceutical blister pack", "medicine bottle"],
-    "metal": ["aluminium beverage can", "steel food tin", "metal cutlery", "scrap metal"],
-    "mixed_items": ["mixed-material household object", "assortment of household items made from different materials"],
-    "paper": ["newspaper", "sheet of printed paper", "paper bag", "book", "magazine", "paper ticket"],
-    "plastic": ["plastic drink bottle", "plastic food container", "plastic bag", "plastic packaging", "plastic household item"],
-    "textile_trash": ["cotton clothing", "fabric garment", "towel", "piece of textile"],
-    "trash": ["used tissue", "disposable nappy", "cigarette butt", "disposable face mask", "miscellaneous residual rubbish"],
-    "vegetation": ["garden leaves", "grass clippings", "plant prunings"],
-    "wood": ["wooden object", "wooden utensil", "piece of timber"],
-}
-
-OBJECT_ITEMS = {label: list(items) for label, items in ITEMS.items()}
-OBJECT_ITEMS["plastic"] += ["plastic toy", "plastic jigsaw puzzle pieces", "black plastic food container"]
-OBJECT_ITEMS["trash"] += ["paper kitchen towel", "roll of paper kitchen towel", "paper napkin"]
-OBJECT_ITEMS["vegetation"] += ["pile of fallen leaves", "heap of grass clippings"]
-OBJECT_ITEMS["food_organics"] += ["banana peel", "orange peel", "apple core", "food waste"]
-OBJECT_ITEMS["metal"] += ["metal food can", "empty tin can"]
+RESULTS = BASE / "trained_expanded"
 
 
-class ObjectPredictor:
+class TrainedPredictor:
     def __init__(self):
-        folder = BASE/"models/siglip2"
-        with (folder/"model.safetensors").open("rb") as source:
-            assert hashlib.file_digest(source, "sha256").hexdigest() == SHA256
-        self.device = "mps" if torch.backends.mps.is_available() else "cpu"
-        torch.set_num_threads(8)
-        self.processor = AutoProcessor.from_pretrained(folder, local_files_only=True)
-        self.model = AutoModel.from_pretrained(folder, local_files_only=True).to(self.device).eval()
-        self.classes = sorted(ITEMS)
-        self.items = [(label, item) for label, items in OBJECT_ITEMS.items() for item in items]
-        tokens = self.processor(text=[f"This is a photo of {item}." for _, item in self.items],
-                                padding="max_length", max_length=64, truncation=True, return_tensors="pt")
-        with torch.inference_mode():
-            text = self.model.get_text_features(**tokens.to(self.device)).pooler_output
-            self.text = text / text.norm(dim=-1, keepdim=True)
+        completed = json.loads((RESULTS / "training_completed.json").read_text())
+        assert completed["status"] == "completed"
+        self.settings = json.loads((RESULTS / "app_settings.json").read_text())
+        self.classes = self.settings["classes"]
+        assert self.settings["training_images"] == completed["split_counts"]["train"]
+        assert completed["verified_image_count"] == sum(completed["split_counts"].values())
+        self.model = tf.keras.models.load_model(RESULTS / "ecosort_model.keras", compile=False)
+        assert self.model.output_shape[-1] == len(self.classes) == 17
 
-    def predict(self, image):
-        image = ImageOps.exif_transpose(image).convert("RGB")
-        inputs = self.processor(images=image, return_tensors="pt").to(self.device)
-        with torch.inference_mode():
-            features = self.model.get_image_features(**inputs).pooler_output
-            features /= features.norm(dim=-1, keepdim=True)
-            logits = (features @ self.text.T * self.model.logit_scale.exp() + self.model.logit_bias)[0]
-        values = logits.float().cpu().numpy()
-        scores = np.asarray([max(values[i] for i, pair in enumerate(self.items) if pair[0] == label)
-                             for label in self.classes])
-        assert np.isfinite(scores).all() and scores.shape == (17,)
-        best = int(values.argmax())
-        return self.items[best], scores
+    def probabilities(self, image):
+        rgb = ImageOps.exif_transpose(image).convert("RGB").resize((224, 224), Image.Resampling.BILINEAR)
+        raw = self.model(np.asarray(rgb, dtype=np.float32)[None, ...], training=False).numpy()[0]
+        logits = np.log(np.clip(raw, 1e-8, 1)) / self.settings["temperature"]
+        scores = np.exp(logits - logits.max())
+        scores /= scores.sum()
+        assert scores.shape == (len(self.classes),) and np.isfinite(scores).all()
+        return scores
 
     def identify(self, image, food_service=False):
-        (label, name), logits = self.predict(image)
-        ordered = np.sort(logits)
-        uncertain = bool(ordered[-1]-ordered[-2] < .5 or ordered[-1] < -10)
-        route, guidance = predicted_item_guidance(label, name, food_service, uncertain)
-        relative = np.exp(logits-logits.max())
-        relative /= relative.sum()
-        return dict(label=label, object=name, uncertain=uncertain, route=route, guidance=guidance,
-                    scores=dict(zip(self.classes, map(float, relative))))
+        scores = self.probabilities(image)
+        order = np.argsort(scores)
+        label = self.classes[int(order[-1])]
+        uncertain = bool(scores[order[-1]] < self.settings["review_threshold"]
+                         or scores[order[-1]] - scores[order[-2]] < self.settings["minimum_top_two_margin"]
+                         or label in self.settings["manual_review_classes"])
+        # Material-only training cannot establish bottle, bag or container identity.
+        route, guidance = disposal_guidance(label, food_service=food_service, uncertain=uncertain)
+        return dict(label=label, object=label.replace("_", " "), uncertain=uncertain,
+                    route=route, guidance=guidance, scores=dict(zip(self.classes, map(float, scores))))
 
 
 if __name__ == "__main__":
-    from huggingface_hub import snapshot_download
-    snapshot_download("google/siglip2-base-patch16-224", revision=REVISION,
-                      local_dir=BASE/"models/siglip2", allow_patterns=["*.json", "tokenizer.model", "model.safetensors"])
-    ObjectPredictor()
-    print("Pinned object model loaded and weight checksum verified.")
+    predictor = TrainedPredictor()
+    print("Loaded project-trained MobileNetV3Large:", predictor.settings["training_images"], "training images.")

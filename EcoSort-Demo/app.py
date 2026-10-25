@@ -1,4 +1,4 @@
-"""One local web interface for the final, frozen EcoSort classifier."""
+"""English local interface for the project-trained MobileNetV3 classifier."""
 import os
 os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
 import hashlib
@@ -11,7 +11,7 @@ import webbrowser
 
 import gradio as gr
 from PIL import Image
-from classifier import ObjectPredictor
+from classifier import TrainedPredictor
 from disposal_rules import ITEM_TYPES, disposal_guidance
 
 BASE = Path(__file__).resolve().parent
@@ -21,7 +21,7 @@ DISPLAY = {"battery":"Battery", "cardboard":"Cardboard", "ceramics":"Ceramics", 
 
 class EcoSort:
     def __init__(self):
-        self.classifier = ObjectPredictor()
+        self.classifier = TrainedPredictor()
         self.lock = threading.Lock()
 
     def classify(self, image, item_type="Not confirmed", food_service=False):
@@ -41,15 +41,15 @@ class EcoSort:
 
 
 def verify_release():
-    record = json.loads((BASE/"evidence/refactor_verified.json").read_text())
-    expected = {"app.py", "classifier.py", "disposal_rules.py", "evaluate.py"}
+    record = json.loads((BASE/"evidence/trained_model_verified.json").read_text())
+    expected = {"app.py", "classifier.py", "disposal_rules.py", "evaluate.py", "train.py"}
     assert set(record["code_sha256"]) == expected
-    assert record["parity_count"] == 60 and record["all_decisions_match"] is True
+    assert record["model"] == "MobileNetV3Large" and record["training_images"] == 117893
     for name, digest in record["code_sha256"].items():
         assert hashlib.sha256((BASE/name).read_bytes()).hexdigest() == digest, "Code changed; run evaluate.py again."
-    for name, digest in record["evidence_sha256"].items():
-        assert name in {"original_manifest.json", "original_results.json"}
-        assert hashlib.sha256((BASE/"evidence"/name).read_bytes()).hexdigest() == digest
+    for name, digest in record["artifact_sha256"].items():
+        assert name in {"ecosort_model.keras", "app_settings.json", "training_completed.json"}
+        assert hashlib.sha256((BASE/"trained_expanded"/name).read_bytes()).hexdigest() == digest
 
 
 def launch(prevent_thread_lock=False):
