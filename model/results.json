@@ -1,0 +1,337 @@
+{
+  "training": {
+    "status": "completed",
+    "verified_image_count": 147303,
+    "split_counts": {
+      "test": 14712,
+      "train": 117893,
+      "validation": 14698
+    },
+    "seconds": 2322.674830332864,
+    "selected": "fine_tuned",
+    "test_metrics": [
+      {
+        "model": "frozen_baseline",
+        "accuracy": 0.7302202283849919,
+        "macro_f1": 0.6902333613846411,
+        "balanced_accuracy": 0.7167452267369223
+      },
+      {
+        "model": "fine_tuned",
+        "accuracy": 0.7841897770527461,
+        "macro_f1": 0.7482853314510279,
+        "balanced_accuracy": 0.7829102246409344
+      }
+    ],
+    "note": "All retained images processed; only the training partition updates weights. Validation selects checkpoints and thresholds. Test images never train the model."
+  },
+  "evaluation": {
+    "verified_at": "2026-10-28T13:28:55.816062+11:00",
+    "metrics": {
+      "validation": {
+        "images": 14698,
+        "accuracy": 0.7939175398013335,
+        "macro_f1": 0.7536001352888423
+      },
+      "test": {
+        "images": 14712,
+        "accuracy": 0.7841897770527461,
+        "macro_f1": 0.7482853314510279
+      }
+    },
+    "rules_and_inputs_passed": true,
+    "manifest_sha256": "650b97a3ede6ccac9b38164b5bf8a899c7b9fac036c942910b315e204138d3d4",
+    "limitations": "Previously observed dataset splits, not fresh independent validation. No real-world accuracy guarantee."
+  },
+  "model_sha256": "7e328d84144e109d9222a7092a26da16e6db54bc467392afaac61367f6db8725",
+  "training_logs": {
+    "frozen_training.csv": [
+      {
+        "epoch": "0",
+        "accuracy": "0.65179443359375",
+        "loss": "0.6756552457809448",
+        "val_accuracy": "0.7264253497123718",
+        "val_loss": "0.8437367081642151",
+        "val_macro_f1": "0.6583711961415775"
+      },
+      {
+        "epoch": "1",
+        "accuracy": "0.6950624585151672",
+        "loss": "0.5630874037742615",
+        "val_accuracy": "0.7387399673461914",
+        "val_loss": "0.8045566082000732",
+        "val_macro_f1": "0.6855009812254883"
+      },
+      {
+        "epoch": "2",
+        "accuracy": "0.6995156407356262",
+        "loss": "0.5510472059249878",
+        "val_accuracy": "0.7417335510253906",
+        "val_loss": "0.797052800655365",
+        "val_macro_f1": "0.6858936603585958"
+      },
+      {
+        "epoch": "3",
+        "accuracy": "0.6978700757026672",
+        "loss": "0.5504148602485657",
+        "val_accuracy": "0.7429582476615906",
+        "val_loss": "0.7994744181632996",
+        "val_macro_f1": "0.6884944940238971"
+      },
+      {
+        "epoch": "4",
+        "accuracy": "0.7020179033279419",
+        "loss": "0.5456265211105347",
+        "val_accuracy": "0.7404409050941467",
+        "val_loss": "0.8011306524276733",
+        "val_macro_f1": "0.682064385782275"
+      },
+      {
+        "epoch": "5",
+        "accuracy": "0.699965238571167",
+        "loss": "0.5474839210510254",
+        "val_accuracy": "0.7438427209854126",
+        "val_loss": "0.7897003293037415",
+        "val_macro_f1": "0.6884013729825854"
+      },
+      {
+        "epoch": "6",
+        "accuracy": "0.7001772522926331",
+        "loss": "0.5487251877784729",
+        "val_accuracy": "0.7364267110824585",
+        "val_loss": "0.8062272667884827",
+        "val_macro_f1": "0.6815500092389327"
+      },
+      {
+        "epoch": "7",
+        "accuracy": "0.7008558511734009",
+        "loss": "0.5453070998191833",
+        "val_accuracy": "0.7394203543663025",
+        "val_loss": "0.7959610223770142",
+        "val_macro_f1": "0.6895619717263564"
+      },
+      {
+        "epoch": "8",
+        "accuracy": "0.7004911303520203",
+        "loss": "0.5462628602981567",
+        "val_accuracy": "0.7437746524810791",
+        "val_loss": "0.791105329990387",
+        "val_macro_f1": "0.6905941972148559"
+      },
+      {
+        "epoch": "9",
+        "accuracy": "0.7006862163543701",
+        "loss": "0.5445557832717896",
+        "val_accuracy": "0.7430943250656128",
+        "val_loss": "0.8003519773483276",
+        "val_macro_f1": "0.6880379264796702"
+      },
+      {
+        "epoch": "10",
+        "accuracy": "0.6995410919189453",
+        "loss": "0.5445904731750488",
+        "val_accuracy": "0.7447271943092346",
+        "val_loss": "0.7874326705932617",
+        "val_macro_f1": "0.6962479035259784"
+      },
+      {
+        "epoch": "11",
+        "accuracy": "0.7000415921211243",
+        "loss": "0.5458495020866394",
+        "val_accuracy": "0.7433664202690125",
+        "val_loss": "0.8015376329421997",
+        "val_macro_f1": "0.7008056401686007"
+      },
+      {
+        "epoch": "12",
+        "accuracy": "0.7012630105018616",
+        "loss": "0.5436189770698547",
+        "val_accuracy": "0.7423458695411682",
+        "val_loss": "0.7983351945877075",
+        "val_macro_f1": "0.6907327583591258"
+      },
+      {
+        "epoch": "13",
+        "accuracy": "0.6998634338378906",
+        "loss": "0.5460297465324402",
+        "val_accuracy": "0.741121232509613",
+        "val_loss": "0.8015063405036926",
+        "val_macro_f1": "0.6950117241124467"
+      },
+      {
+        "epoch": "14",
+        "accuracy": "0.6998464465141296",
+        "loss": "0.5477977991104126",
+        "val_accuracy": "0.7435024976730347",
+        "val_loss": "0.79551100730896",
+        "val_macro_f1": "0.691350452196008"
+      },
+      {
+        "epoch": "15",
+        "accuracy": "0.7002366781234741",
+        "loss": "0.5462916493415833",
+        "val_accuracy": "0.7454075217247009",
+        "val_loss": "0.7931670546531677",
+        "val_macro_f1": "0.6974390301551099"
+      }
+    ],
+    "fine_training.csv": [
+      {
+        "epoch": "0",
+        "accuracy": "0.6707183718681335",
+        "loss": "0.598804771900177",
+        "val_accuracy": "0.7584025263786316",
+        "val_loss": "0.755401074886322",
+        "val_macro_f1": "0.7078894330338622"
+      },
+      {
+        "epoch": "1",
+        "accuracy": "0.7051733136177063",
+        "loss": "0.5273225903511047",
+        "val_accuracy": "0.7669070363044739",
+        "val_loss": "0.7213143110275269",
+        "val_macro_f1": "0.7179582077401202"
+      },
+      {
+        "epoch": "2",
+        "accuracy": "0.7209333777427673",
+        "loss": "0.49434423446655273",
+        "val_accuracy": "0.776296079158783",
+        "val_loss": "0.6967710256576538",
+        "val_macro_f1": "0.7323313182749043"
+      },
+      {
+        "epoch": "3",
+        "accuracy": "0.7341318130493164",
+        "loss": "0.4678393602371216",
+        "val_accuracy": "0.7815349102020264",
+        "val_loss": "0.6765247583389282",
+        "val_macro_f1": "0.7401857931848875"
+      },
+      {
+        "epoch": "4",
+        "accuracy": "0.7456591725349426",
+        "loss": "0.4475823938846588",
+        "val_accuracy": "0.7876582145690918",
+        "val_loss": "0.6624146103858948",
+        "val_macro_f1": "0.745205639448162"
+      },
+      {
+        "epoch": "5",
+        "accuracy": "0.7573053240776062",
+        "loss": "0.4265294373035431",
+        "val_accuracy": "0.7939175367355347",
+        "val_loss": "0.6448595523834229",
+        "val_macro_f1": "0.7536001352888423"
+      }
+    ],
+    "baseline_vs_finetuned.csv": [
+      {
+        "model": "frozen_baseline",
+        "accuracy": "0.7302202283849919",
+        "macro_f1": "0.6902333613846411",
+        "balanced_accuracy": "0.7167452267369223"
+      },
+      {
+        "model": "fine_tuned",
+        "accuracy": "0.7841897770527461",
+        "macro_f1": "0.7482853314510279",
+        "balanced_accuracy": "0.7829102246409344"
+      }
+    ],
+    "class_weights.csv": [
+      {
+        "label": "battery",
+        "train_images": "2990",
+        "class_weight": "0.98790018673549"
+      },
+      {
+        "label": "cardboard",
+        "train_images": "1234",
+        "class_weight": "1.5377689297333537"
+      },
+      {
+        "label": "ceramics",
+        "train_images": "754",
+        "class_weight": "1.9460337478421508"
+      },
+      {
+        "label": "ewaste",
+        "train_images": "15225",
+        "class_weight": "0.437794207457325"
+      },
+      {
+        "label": "food_organics",
+        "train_images": "23791",
+        "class_weight": "0.3502211043787525"
+      },
+      {
+        "label": "glass",
+        "train_images": "4877",
+        "class_weight": "0.7735213120729045"
+      },
+      {
+        "label": "household_problem_waste",
+        "train_images": "2081",
+        "class_weight": "1.184166093252425"
+      },
+      {
+        "label": "light_bulbs",
+        "train_images": "739",
+        "class_weight": "1.9460337478421508"
+      },
+      {
+        "label": "medicines",
+        "train_images": "1796",
+        "class_weight": "1.2746633402131589"
+      },
+      {
+        "label": "metal",
+        "train_images": "6412",
+        "class_weight": "0.6746086489490228"
+      },
+      {
+        "label": "mixed_items",
+        "train_images": "24911",
+        "class_weight": "0.342257584382202"
+      },
+      {
+        "label": "paper",
+        "train_images": "6100",
+        "class_weight": "0.6916458002198277"
+      },
+      {
+        "label": "plastic",
+        "train_images": "4510",
+        "class_weight": "0.8043783829402555"
+      },
+      {
+        "label": "textile_trash",
+        "train_images": "8912",
+        "class_weight": "0.5722174172124831"
+      },
+      {
+        "label": "trash",
+        "train_images": "10163",
+        "class_weight": "0.5358431693157839"
+      },
+      {
+        "label": "vegetation",
+        "train_images": "450",
+        "class_weight": "1.9460337478421508"
+      },
+      {
+        "label": "wood",
+        "train_images": "2948",
+        "class_weight": "0.994912579610562"
+      }
+    ]
+  },
+  "data_preparation": {
+    "reconstructed_at": "2026-10-28",
+    "raw_candidates": 167285,
+    "retained": 147303,
+    "image_label_group_split_match": true,
+    "method": "Fresh decoding and hashing; all rows and all columns except the stored phash representation match the fixed manifest. The old CSV stores phash as floating-point scientific notation; the reconstructed output preserves integer strings. Active split unchanged."
+  }
+}
